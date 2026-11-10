@@ -1,12 +1,14 @@
 /**
  * trang đăng nhập tài khoản (US02)
- * giao diện trực quan, hỗ trợ ẩn hiện mật khẩu và phím tắt thử nghiệm 4 vai trò
+ * thương hiệu: gia sư việt - kết nối gia sư, nâng tầm tri thức
+ * kích thước chữ to rõ, dễ nhìn, hỗ trợ phím tắt 1-click test tài khoản
  */
 
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { authService } from '../../services/auth.service';
+import logoIcon from '../../assets/logo-icon.png';
 import { Mail, Lock, Eye, EyeOff, AlertCircle, ArrowRight } from 'lucide-react';
 
 const LoginPage = () => {
@@ -55,29 +57,38 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white p-7 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
-        <div className="text-center space-y-1">
-          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Đăng nhập</h2>
-          <p className="text-xs text-slate-500">
-            Chào mừng bạn quay trở lại với nền tảng kết nối gia sư
+    <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-lg w-full bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-lg space-y-7">
+        {/* Logo và tiêu đề thương hiệu */}
+        <div className="text-center space-y-2">
+          <div className="flex justify-center mb-1">
+            <img src={logoIcon} alt="Logo Gia Sư Việt" className="w-16 h-16 object-contain rounded-full shadow-md" />
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            GIA SƯ <span className="text-blue-600">VIỆT</span>
+          </h2>
+          <p className="text-xs uppercase font-bold text-amber-500 tracking-wider">
+            Kết nối gia sư - Nâng tầm tri thức
+          </p>
+          <p className="text-sm sm:text-base text-slate-500 pt-1">
+            Đăng nhập vào tài khoản của bạn
           </p>
         </div>
 
         {errorMsg && (
-          <div className="flex items-start gap-2 p-3 text-xs text-rose-700 bg-rose-50 border border-rose-200 rounded-xl">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+          <div className="flex items-start gap-3 p-3.5 text-sm text-rose-700 bg-rose-50 border border-rose-200 rounded-xl">
+            <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
             <span>{errorMsg}</span>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-sm font-bold text-slate-700 mb-1.5">
               Địa chỉ Email
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+              <Mail className="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5" />
               <input
                 type="email"
                 name="email"
@@ -85,22 +96,22 @@ const LoginPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="nguyenvan@gmail.com"
-                className="w-full pl-10 pr-3 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
+                className="w-full pl-11 pr-4 py-3 text-base rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
               />
             </div>
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-1">
-              <label className="block text-xs font-semibold text-slate-700">
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-sm font-bold text-slate-700">
                 Mật khẩu
               </label>
-              <Link to="/forgot-password" className="text-[11px] text-blue-600 font-medium hover:underline">
+              <Link to="/forgot-password" className="text-xs sm:text-sm text-blue-600 font-bold hover:underline">
                 Quên mật khẩu?
               </Link>
             </div>
             <div className="relative">
-              <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+              <Lock className="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 name="password"
@@ -108,14 +119,14 @@ const LoginPage = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Nhập mật khẩu..."
-                className="w-full pl-10 pr-10 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
+                className="w-full pl-11 pr-11 py-3 text-base rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3.5 top-3 text-slate-400 hover:text-slate-600"
+                className="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-600"
               >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -123,64 +134,64 @@ const LoginPage = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full mt-2 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl shadow-md shadow-blue-500/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full mt-3 py-3.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-base font-bold rounded-xl shadow-md shadow-blue-500/25 transition-all flex items-center justify-center gap-2.5 disabled:opacity-50"
           >
             <span>{isLoading ? 'Đang đăng nhập...' : 'Đăng nhập ngay'}</span>
-            {!isLoading && <ArrowRight className="w-4 h-4" />}
+            {!isLoading && <ArrowRight className="w-5 h-5" />}
           </button>
         </form>
 
-        <p className="text-center text-xs text-slate-600 pt-1">
+        <p className="text-center text-sm text-slate-600 pt-1">
           Chưa có tài khoản?{' '}
           <Link to="/register" className="text-blue-600 font-bold hover:underline">
-            Đăng ký tài khoản
+            Đăng ký tài khoản ngay
           </Link>
         </p>
 
-        {/* Khối tài khoản mẫu thử nghiệm */}
-        <div className="pt-4 border-t border-slate-100 space-y-2">
-          <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider text-center">
-            Chọn nhanh tài khoản để thử nghiệm
+        {/* Khối chọn nhanh tài khoản mẫu */}
+        <div className="pt-5 border-t border-slate-100 space-y-3">
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider text-center">
+            Chọn nhanh tài khoản để kiểm thử
           </p>
-          <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="grid grid-cols-2 gap-2.5 text-sm">
             <button
               type="button"
               onClick={() => setFormData({ email: 'hocvien@test.com', password: 'Password123!' })}
-              className="p-2.5 rounded-xl border border-blue-100 bg-blue-50/60 hover:bg-blue-100/80 text-blue-800 text-left transition-all"
+              className="p-3 rounded-xl border border-blue-200 bg-blue-50/70 hover:bg-blue-100 text-blue-900 text-left transition-all"
             >
-              <div className="font-bold flex items-center gap-1">🎓 Học viên</div>
-              <div className="text-[10px] text-slate-500 truncate">hocvien@test.com</div>
+              <div className="font-extrabold flex items-center gap-1.5">🎓 Học viên</div>
+              <div className="text-xs text-blue-700/80 truncate">hocvien@test.com</div>
             </button>
 
             <button
               type="button"
               onClick={() => setFormData({ email: 'giasu@test.com', password: 'Password123!' })}
-              className="p-2.5 rounded-xl border border-emerald-100 bg-emerald-50/60 hover:bg-emerald-100/80 text-emerald-800 text-left transition-all"
+              className="p-3 rounded-xl border border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100 text-emerald-900 text-left transition-all"
             >
-              <div className="font-bold flex items-center gap-1">👨‍🏫 Gia sư</div>
-              <div className="text-[10px] text-slate-500 truncate">giasu@test.com</div>
+              <div className="font-extrabold flex items-center gap-1.5">👨‍🏫 Gia sư</div>
+              <div className="text-xs text-emerald-700/80 truncate">giasu@test.com</div>
             </button>
 
             <button
               type="button"
               onClick={() => setFormData({ email: 'trungtam@test.com', password: 'Password123!' })}
-              className="p-2.5 rounded-xl border border-purple-100 bg-purple-50/60 hover:bg-purple-100/80 text-purple-800 text-left transition-all"
+              className="p-3 rounded-xl border border-purple-200 bg-purple-50/70 hover:bg-purple-100 text-purple-900 text-left transition-all"
             >
-              <div className="font-bold flex items-center gap-1">🏫 Trung tâm</div>
-              <div className="text-[10px] text-slate-500 truncate">trungtam@test.com</div>
+              <div className="font-extrabold flex items-center gap-1.5">🏫 Trung tâm</div>
+              <div className="text-xs text-purple-700/80 truncate">trungtam@test.com</div>
             </button>
 
             <button
               type="button"
               onClick={() => setFormData({ email: 'admin@test.com', password: 'Password123!' })}
-              className="p-2.5 rounded-xl border border-rose-100 bg-rose-50/60 hover:bg-rose-100/80 text-rose-800 text-left transition-all"
+              className="p-3 rounded-xl border border-rose-200 bg-rose-50/70 hover:bg-rose-100 text-rose-900 text-left transition-all"
             >
-              <div className="font-bold flex items-center gap-1">🛡️ Quản trị viên</div>
-              <div className="text-[10px] text-slate-500 truncate">admin@test.com</div>
+              <div className="font-extrabold flex items-center gap-1.5">🛡️ Quản trị viên</div>
+              <div className="text-xs text-rose-700/80 truncate">admin@test.com</div>
             </button>
           </div>
-          <p className="text-[10px] text-slate-400 text-center">
-            Mật khẩu mặc định: <code className="bg-slate-100 px-1 py-0.5 rounded font-mono text-slate-600">Password123!</code>
+          <p className="text-xs text-slate-400 text-center">
+            Mật khẩu mặc định: <code className="bg-slate-100 px-1.5 py-0.5 rounded font-mono font-bold text-slate-700">Password123!</code>
           </p>
         </div>
       </div>
