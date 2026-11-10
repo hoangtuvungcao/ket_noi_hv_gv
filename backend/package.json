@@ -1,10 +1,12 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Backend for tutoring platform",
+  "description": "Backend nền tảng kết nối gia sư và học viên",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node test-sprint1.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -16,6 +18,7 @@
     "helmet": "^8.0.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.5"
+    "mongoose": "^8.9.5",
+    "nodemailer": "^10.5.0"
   }
 }
