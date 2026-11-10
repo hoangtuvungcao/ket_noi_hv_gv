@@ -1,7 +1,7 @@
 /**
  * trang đăng nhập tài khoản (US02)
  * thương hiệu: gia sư việt - kết nối gia sư, nâng tầm tri thức
- * kích thước chữ to rõ, dễ nhìn, hỗ trợ phím tắt 1-click test tài khoản
+ * giao diện tinh gọn, bảo mật, chuyên nghiệp
  */
 
 import React, { useState } from 'react';
@@ -58,7 +58,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-lg w-full bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-lg space-y-7">
+      <div className="max-w-md w-full bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-lg space-y-7">
         {/* Logo và tiêu đề thương hiệu */}
         <div className="text-center space-y-2">
           <div className="flex justify-center mb-1">
@@ -147,53 +147,6 @@ const LoginPage = () => {
             Đăng ký tài khoản ngay
           </Link>
         </p>
-
-        {/* Khối chọn nhanh tài khoản mẫu */}
-        <div className="pt-5 border-t border-slate-100 space-y-3">
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider text-center">
-            Chọn nhanh tài khoản để kiểm thử
-          </p>
-          <div className="grid grid-cols-2 gap-2.5 text-sm">
-            <button
-              type="button"
-              onClick={() => setFormData({ email: 'hocvien@test.com', password: 'Password123!' })}
-              className="p-3 rounded-xl border border-blue-200 bg-blue-50/70 hover:bg-blue-100 text-blue-900 text-left transition-all"
-            >
-              <div className="font-extrabold flex items-center gap-1.5">🎓 Học viên</div>
-              <div className="text-xs text-blue-700/80 truncate">hocvien@test.com</div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setFormData({ email: 'giasu@test.com', password: 'Password123!' })}
-              className="p-3 rounded-xl border border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100 text-emerald-900 text-left transition-all"
-            >
-              <div className="font-extrabold flex items-center gap-1.5">👨‍🏫 Gia sư</div>
-              <div className="text-xs text-emerald-700/80 truncate">giasu@test.com</div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setFormData({ email: 'trungtam@test.com', password: 'Password123!' })}
-              className="p-3 rounded-xl border border-purple-200 bg-purple-50/70 hover:bg-purple-100 text-purple-900 text-left transition-all"
-            >
-              <div className="font-extrabold flex items-center gap-1.5">🏫 Trung tâm</div>
-              <div className="text-xs text-purple-700/80 truncate">trungtam@test.com</div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setFormData({ email: 'admin@test.com', password: 'Password123!' })}
-              className="p-3 rounded-xl border border-rose-200 bg-rose-50/70 hover:bg-rose-100 text-rose-900 text-left transition-all"
-            >
-              <div className="font-extrabold flex items-center gap-1.5">🛡️ Quản trị viên</div>
-              <div className="text-xs text-rose-700/80 truncate">admin@test.com</div>
-            </button>
-          </div>
-          <p className="text-xs text-slate-400 text-center">
-            Mật khẩu mặc định: <code className="bg-slate-100 px-1.5 py-0.5 rounded font-mono font-bold text-slate-700">Password123!</code>
-          </p>
-        </div>
       </div>
     </div>
   );

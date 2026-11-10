@@ -1,231 +1,284 @@
 /**
  * trang bảng điều khiển cá nhân (dashboard)
  * thương hiệu: gia sư việt - kết nối gia sư, nâng tầm tri thức
- * chữ to rõ ràng, trình bày mạch lạc, dễ thao tác
+ * thiết kế chuyên nghiệp, giao diện thực tế cho người dùng
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { authService } from '../../services/auth.service';
-import logoIcon from '../../assets/logo-icon.png';
 import {
   User,
   Shield,
-  CheckCircle,
-  Clock,
-  RefreshCw,
-  Layers,
+  BookOpen,
+  Calendar,
+  MessageSquare,
+  Bell,
   GraduationCap,
   Building2,
   UserCheck,
+  CheckCircle2,
+  Clock,
+  ArrowRight,
+  ShieldCheck,
+  Settings,
 } from 'lucide-react';
 
 const DashboardPage = () => {
   const { user, updateUser } = useAuth();
-  const [profileData, setProfileData] = useState(null);
-  const [isLoadingProfile, setIsLoadingProfile] = useState(false);
-  const [apiResponseStatus, setApiResponseStatus] = useState('');
+  const [profile, setProfile] = useState(null);
 
-  const handleFetchLiveProfile = async () => {
-    setIsLoadingProfile(true);
-    setApiResponseStatus('');
-    try {
-      const res = await authService.getMe();
-      if (res.success && res.data) {
-        setProfileData(res.data);
-        updateUser(res.data);
-        setApiResponseStatus('Đã kết nối và xác thực API /users/me thành công!');
+  // tự động nạp thông tin hồ sơ người dùng khi vào trang
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await authService.getMe();
+        if (res.success && res.data) {
+          setProfile(res.data.profile);
+          updateUser(res.data);
+        }
+      } catch (err) {
+        console.error('Lỗi khi tải thông tin hồ sơ:', err);
       }
-    } catch (err) {
-      setApiResponseStatus('Lỗi khi gọi API: ' + (err.error?.message || err.message));
-    } finally {
-      setIsLoadingProfile(false);
-    }
-  };
+    };
+    fetchProfile();
+  }, []);
 
-  const getRoleInfo = (role) => {
+  const getRoleDetails = (role) => {
     switch (role) {
       case 'student':
         return {
           title: 'Học viên / Phụ huynh',
-          desc: 'Tìm kiếm người dạy kèm & quản lý lớp học',
-          icon: <UserCheck className="w-6 h-6 text-blue-600" />,
+          badgeClass: 'bg-blue-100 text-blue-800 border-blue-200',
+          icon: <UserCheck className="w-5 h-5 text-blue-600" />,
         };
       case 'tutor':
         return {
           title: 'Gia sư / Giáo viên',
-          desc: 'Nhận lớp dạy kèm & xác minh hồ sơ chuyên môn',
-          icon: <GraduationCap className="w-6 h-6 text-emerald-600" />,
+          badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+          icon: <GraduationCap className="w-5 h-5 text-emerald-600" />,
         };
       case 'center':
         return {
           title: 'Trung tâm đào tạo',
-          desc: 'Đăng tin tuyển dụng & quản lý giáo viên',
-          icon: <Building2 className="w-6 h-6 text-purple-600" />,
+          badgeClass: 'bg-purple-100 text-purple-800 border-purple-200',
+          icon: <Building2 className="w-5 h-5 text-purple-600" />,
         };
       case 'admin':
         return {
           title: 'Quản trị viên hệ thống',
-          desc: 'Kiểm duyệt hồ sơ, tin đăng & người dùng',
-          icon: <Shield className="w-6 h-6 text-rose-600" />,
+          badgeClass: 'bg-rose-100 text-rose-800 border-rose-200',
+          icon: <Shield className="w-5 h-5 text-rose-600" />,
         };
       default:
-        return { title: role, desc: '', icon: <User className="w-6 h-6" /> };
+        return {
+          title: 'Người dùng',
+          badgeClass: 'bg-slate-100 text-slate-800 border-slate-200',
+          icon: <User className="w-5 h-5 text-slate-600" />,
+        };
     }
   };
 
-  const roleInfo = getRoleInfo(user?.role);
+  const roleDetails = getRoleDetails(user?.role);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-9">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* 1. Thẻ Chào Mừng & Thông Tin Người Dùng */}
       <div className="bg-white rounded-3xl border border-slate-200 p-7 sm:p-9 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-5">
-          <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-extrabold text-3xl shadow-lg shadow-blue-500/25 flex-shrink-0">
+          <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-extrabold text-3xl shadow-lg shadow-blue-500/20 flex-shrink-0">
             {user?.fullName ? user.fullName[0].toUpperCase() : <User className="w-10 h-10" />}
           </div>
           <div className="space-y-1.5">
             <div className="flex items-center gap-3 flex-wrap">
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                Xin chào, {user?.fullName || user?.email.split('@')[0]}!
+                Xin chào, {user?.fullName || user?.email?.split('@')[0]}!
               </h1>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-bold bg-blue-50 text-blue-700 border border-blue-200 shadow-sm">
-                {roleInfo.icon}
-                <span>{roleInfo.title}</span>
+              <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-bold border shadow-sm ${roleDetails.badgeClass}`}>
+                {roleDetails.icon}
+                <span>{roleDetails.title}</span>
               </span>
             </div>
             <p className="text-sm text-slate-500">
-              Email: <span className="font-semibold text-slate-700">{user?.email}</span> • Trạng thái:{' '}
-              <span className={`font-bold ${user?.status === 'active' ? 'text-emerald-600' : 'text-amber-600'}`}>
-                {user?.status === 'active' ? 'Đã kích hoạt' : 'Đang chờ duyệt'}
-              </span>
+              Email: <span className="font-semibold text-slate-700">{user?.email}</span>
+              {user?.phone && <span> • SĐT: <span className="font-semibold text-slate-700">{user.phone}</span></span>}
             </p>
           </div>
         </div>
 
-        <button
-          onClick={handleFetchLiveProfile}
-          disabled={isLoadingProfile}
-          className="inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold transition-all shadow-sm disabled:opacity-50"
-        >
-          <RefreshCw className={`w-4 h-4 ${isLoadingProfile ? 'animate-spin text-blue-600' : ''}`} />
-          <span>Kiểm tra kết nối API Backend</span>
-        </button>
+        <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-slate-50 border border-slate-200 text-sm font-semibold text-slate-700">
+          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+          <span>Tài khoản đã kích hoạt</span>
+        </div>
       </div>
 
-      {apiResponseStatus && (
-        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-sm text-emerald-800 flex items-center gap-2.5 font-medium">
-          <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0" />
-          <span>{apiResponseStatus}</span>
+      {/* 2. Thống kê nhanh hoạt động (Quick Stats) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold text-slate-500">Lớp học hiện tại</span>
+            <div className="p-2 rounded-xl bg-blue-50 text-blue-600">
+              <BookOpen className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="text-3xl font-extrabold text-slate-900">0</div>
+          <p className="text-xs text-slate-400">Đang hoạt động</p>
         </div>
-      )}
 
-      {/* 2. Tổng Quan Nền Tảng & Lộ Trình Triển Khai */}
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold text-slate-500">Yêu cầu & Đơn ứng tuyển</span>
+            <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600">
+              <Calendar className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="text-3xl font-extrabold text-slate-900">0</div>
+          <p className="text-xs text-slate-400">Đơn chờ phản hồi</p>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold text-slate-500">Tin nhắn mới</span>
+            <div className="p-2 rounded-xl bg-purple-50 text-purple-600">
+              <MessageSquare className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="text-3xl font-extrabold text-slate-900">0</div>
+          <p className="text-xs text-slate-400">Chưa đọc</p>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold text-slate-500">Thông báo hệ thống</span>
+            <div className="p-2 rounded-xl bg-amber-50 text-amber-600">
+              <Bell className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="text-3xl font-extrabold text-slate-900">0</div>
+          <p className="text-xs text-slate-400">Thông báo mới</p>
+        </div>
+      </div>
+
+      {/* 3. Lối tắt thao tác nhanh & Khuyến nghị */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Cột Trái: Trạng thái Sprint 1 */}
         <div className="lg:col-span-2 bg-white rounded-3xl border border-slate-200 p-8 space-y-6 shadow-sm">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-5">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-emerald-100 text-emerald-700 rounded-2xl">
-                <CheckCircle className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-900 text-lg sm:text-xl">
-                  Sprint 1: Nền Tảng & Xác Thực (US01, US02)
-                </h3>
-                <p className="text-sm text-slate-500">
-                  GIA SƯ VIỆT – Đã hoàn thiện và kiểm thử đạt chuẩn
-                </p>
-              </div>
-            </div>
-            <span className="text-xs font-extrabold px-3 py-1.5 bg-emerald-100 text-emerald-800 rounded-lg">
-              Sẵn Sàng
-            </span>
+          <h2 className="text-xl font-bold text-slate-900">Tính năng quản lý nhanh</h2>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {user?.role === 'student' && (
+              <>
+                <div className="p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all space-y-2 group">
+                  <h3 className="font-bold text-base text-slate-900 group-hover:text-blue-600 flex items-center justify-between">
+                    <span>Đăng yêu cầu tìm gia sư</span>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Tạo bài đăng tìm người dạy kèm theo môn học, địa điểm và học phí mong muốn.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all space-y-2 group">
+                  <h3 className="font-bold text-base text-slate-900 group-hover:text-blue-600 flex items-center justify-between">
+                    <span>Tìm kiếm hồ sơ gia sư</span>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Xem danh sách gia sư giỏi đã được xác minh bằng cấp và đánh giá năng lực.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {user?.role === 'tutor' && (
+              <>
+                <div className="p-5 rounded-2xl border border-slate-200 hover:border-emerald-400 hover:shadow-md transition-all space-y-2 group">
+                  <h3 className="font-bold text-base text-slate-900 group-hover:text-emerald-600 flex items-center justify-between">
+                    <span>Hồ sơ & Xác minh bằng cấp</span>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600" />
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Cập nhật lý lịch, bằng cấp cử nhân, thẻ sinh viên để nhận huy hiệu xác thực uy tín.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl border border-slate-200 hover:border-emerald-400 hover:shadow-md transition-all space-y-2 group">
+                  <h3 className="font-bold text-base text-slate-900 group-hover:text-emerald-600 flex items-center justify-between">
+                    <span>Tìm lớp dạy mới</span>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600" />
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Tìm kiếm các lớp học cần gia sư theo môn học và khu vực bạn rảnh rỗi.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {user?.role === 'center' && (
+              <>
+                <div className="p-5 rounded-2xl border border-slate-200 hover:border-purple-400 hover:shadow-md transition-all space-y-2 group">
+                  <h3 className="font-bold text-base text-slate-900 group-hover:text-purple-600 flex items-center justify-between">
+                    <span>Đăng tin tuyển giáo viên</span>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600" />
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Đăng tuyển dụng giáo viên, gia sư giảng dạy cho các lớp học tại trung tâm.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl border border-slate-200 hover:border-purple-400 hover:shadow-md transition-all space-y-2 group">
+                  <h3 className="font-bold text-base text-slate-900 group-hover:text-purple-600 flex items-center justify-between">
+                    <span>Quản lý hồ sơ ứng viên</span>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600" />
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Xem danh sách các gia sư ứng tuyển vào các vị trí tuyển dụng của trung tâm.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {user?.role === 'admin' && (
+              <>
+                <div className="p-5 rounded-2xl border border-slate-200 hover:border-rose-400 hover:shadow-md transition-all space-y-2 group">
+                  <h3 className="font-bold text-base text-slate-900 group-hover:text-rose-600 flex items-center justify-between">
+                    <span>Duyệt hồ sơ gia sư</span>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-rose-600" />
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Kiểm tra giấy tờ CCCD, bằng cấp, thẻ sinh viên của gia sư và cấp quyền.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl border border-slate-200 hover:border-rose-400 hover:shadow-md transition-all space-y-2 group">
+                  <h3 className="font-bold text-base text-slate-900 group-hover:text-rose-600 flex items-center justify-between">
+                    <span>Duyệt bài đăng lớp học</span>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-rose-600" />
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Kiểm duyệt nội dung tin tìm gia sư của học viên và việc làm của trung tâm.
+                  </p>
+                </div>
+              </>
+            )}
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm">
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-3">
-              <p className="font-bold text-slate-900 flex items-center gap-2 text-base">
-                <Shield className="w-5 h-5 text-blue-600" /> Hệ thống Backend
-              </p>
-              <ul className="space-y-2 text-slate-600">
-                <li>✓ 16 Mô hình CSDL Mongoose hoàn chỉnh</li>
-                <li>✓ API RESTful chuẩn /api/v1/auth & /api/v1/users</li>
-                <li>✓ Chuẩn hóa định dạng phản hồi ({`{ success, message, data }`})</li>
-                <li>✓ Đăng ký, OTP email, Đăng nhập JWT, Cookie HttpOnly</li>
-                <li>✓ Phân quyền RBAC, Giới hạn tần suất gọi, Mã hóa AES-256</li>
-              </ul>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-3">
-              <p className="font-bold text-slate-900 flex items-center gap-2 text-base">
-                <Layers className="w-5 h-5 text-indigo-600" /> Giao diện Frontend
-              </p>
-              <ul className="space-y-2 text-slate-600">
-                <li>✓ Giao diện Gia Sư Việt hiện đại, chữ to rõ ràng</li>
-                <li>✓ Logo chính thức & Favicon đồng bộ</li>
-                <li>✓ Form đăng ký tinh gọn: Học viên, Gia sư, Trung tâm</li>
-                <li>✓ axiosClient tự động Refresh Token khi token hết hạn</li>
-                <li>✓ Bảo vệ phiên làm việc an toàn trong bộ nhớ (in-memory)</li>
-              </ul>
-            </div>
-          </div>
-
-          {profileData && (
-            <div className="p-5 rounded-2xl bg-slate-900 text-slate-200 text-xs font-mono overflow-x-auto space-y-2">
-              <p className="text-emerald-400 font-bold mb-2">// Dữ liệu trả về từ GET /api/v1/users/me:</p>
-              <pre>{JSON.stringify(profileData, null, 2)}</pre>
-            </div>
-          )}
         </div>
 
-        {/* Cột Phải: Các Sprint Tiếp Theo */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-8 space-y-6 shadow-sm">
-          <div className="flex items-center gap-2.5">
-            <Clock className="w-5 h-5 text-blue-600" />
-            <h3 className="font-bold text-slate-900 text-base sm:text-lg">Các Bước Tiếp Theo</h3>
+        {/* Khuyến nghị an toàn cho người dùng */}
+        <div className="bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-3xl p-8 space-y-5 shadow-lg flex flex-col justify-between">
+          <div className="space-y-4">
+            <div className="p-3 rounded-2xl bg-blue-500/20 text-blue-400 w-fit">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <h3 className="text-xl font-bold text-white">An tâm kết nối học tập</h3>
+            <p className="text-sm text-slate-300 leading-relaxed">
+              Thông tin liên hệ như số điện thoại và địa chỉ nhà của bạn luôn được bảo vệ an toàn. Chỉ mở cho đối tác khi hai bên xác nhận nhận lớp.
+            </p>
           </div>
 
-          <div className="space-y-3.5">
-            <div className="p-4 rounded-2xl border border-slate-200 bg-white hover:border-blue-300 transition-colors space-y-1">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-slate-900">Sprint 3: Hồ sơ & Xác minh</span>
-                <span className="text-xs bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-md font-bold">Tuần 3</span>
-              </div>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Cập nhật thông tin gia sư, tải lên CCCD/bằng cấp, trang quản trị phê duyệt hồ sơ.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl border border-slate-200 bg-white hover:border-blue-300 transition-colors space-y-1">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-slate-900">Sprint 4: Đăng tin & Tìm kiếm</span>
-                <span className="text-xs bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-md font-bold">Tuần 4</span>
-              </div>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Đăng yêu cầu tìm gia sư, bộ lọc theo môn học, khu vực, học phí, kiểm duyệt tin.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl border border-slate-200 bg-white hover:border-blue-300 transition-colors space-y-1">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-slate-900">Sprint 5: Kết nối lớp học</span>
-                <span className="text-xs bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-md font-bold">Tuần 5</span>
-              </div>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Gia sư ứng tuyển, học viên chấp nhận lớp, mở số điện thoại & địa chỉ cho hai bên.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl border border-slate-200 bg-white hover:border-blue-300 transition-colors space-y-1">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-slate-900">Sprint 6: Trò chuyện & Đánh giá</span>
-                <span className="text-xs bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-md font-bold">Tuần 6</span>
-              </div>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Nhắn tin trực tiếp qua Socket.IO, thông báo đẩy, chấm điểm đánh giá sau khi học.
-              </p>
-            </div>
+          <div className="pt-4 border-t border-slate-800 text-xs text-slate-400 flex items-center gap-2">
+            <Clock className="w-4 h-4 text-amber-400 flex-shrink-0" />
+            <span>Hỗ trợ kỹ thuật: support@giasuviet.vn</span>
           </div>
         </div>
       </div>
