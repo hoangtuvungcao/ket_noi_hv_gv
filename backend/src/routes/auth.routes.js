@@ -6,8 +6,10 @@ const { verifyToken } = require('../middlewares/auth.middleware');
 
 router.post('/register', validate.register, authController.register);
 router.post('/login', validate.login, authController.login);
-
-// API bảo vệ: Chỉ gọi được khi có Access Token
 router.get('/me', verifyToken, authController.getMe);
+
+// 2 route mới thêm:
+router.post('/refresh', authController.refreshToken);
+router.post('/logout', authController.logout);
 
 module.exports = router;

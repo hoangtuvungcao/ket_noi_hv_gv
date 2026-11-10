@@ -72,6 +72,42 @@ const authController = {
       res.status(500).json({ message: 'Lỗi server', error: error.message });
     }
   },
+  // 4. Cấp lại Access Token mới từ Refresh Token
+  refreshToken: async (req, res) => {
+    try {
+      const token = req.cookies?.refreshToken;
+      if (!token) {
+        return res.status(401).json({ message: 'Không tìm thấy Refresh Token, vui lòng đăng nhập lại' });
+      }
+
+      jwt.verify(token, process.env.JWT_REFRESH_SECRET, async (err, decoded) => {
+        if (err) {
+          return res.status(403).json({ message: 'Refresh Token không hợp lệ hoặc đã hết hạn' });
+        }
+
+        const user = await User.findById(decoded.id);
+        if (!user || user.status === 'locked') {
+          return res.status(403).json({ message: 'Tài khoản không tồn tại hoặc đã bị khóa' });
+        }
+
+        // Tạo chuỗi Access Token mới (15 phút)
+        const newAccessToken = generateAccessToken(user);
+        res.status(200).json({ accessToken: newAccessToken });
+      });
+    } catch (error) {
+      res.status(500).json({ message: 'Lỗi server', error: error.message });
+    }
+  },
+
+  // 5. Đăng xuất (Xóa Cookie Refresh Token)
+  logout: (req, res) => {
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict'
+    });
+    res.status(200).json({ message: 'Đăng xuất thành công' });
+  }
 };
 
 module.exports = authController;
