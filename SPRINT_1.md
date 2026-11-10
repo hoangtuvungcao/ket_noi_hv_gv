@@ -258,3 +258,4 @@ npm run test:backend
 
 ## 8. Kết luận nghiệm thu
 Giai đoạn **Sprint 1 (Chuẩn bị & Kiến trúc nền tảng)** đã được hoàn thiện đạt chuẩn chất lượng cao nhất, đồng bộ mã nguồn lên nhánh **`trong`** của Git repository và sẵn sàng bước sang **Sprint 3 (Hồ sơ & Kiểm duyệt - US03, US04)**.
+
