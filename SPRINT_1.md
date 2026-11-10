@@ -3,14 +3,14 @@
 
 ---
 
-## 1. Tổng quan mục tiêu Sprint 1 (Tuần 1 & 2: Chuẩn bị)
+## 1. Tổng quan mục tiêu Sprint 1 (Tuần 1 & 2: Chuẩn bị & Kiến trúc nền tảng)
 
 Theo kế hoạch phát triển Agile Scrum của dự án, Sprint 1 tập trung vào giai đoạn **Chuẩn bị và Thiết lập nền tảng hệ thống**, bao gồm:
-* **Backend:** Thiết kế CSDL (ERD), API Contract, khởi tạo Express, kết nối DB MongoDB, cấu trúc thư mục chuẩn và biến môi trường `.env`.
-* **Frontend:** Khởi tạo React + Vite, thiết lập React Router, xây dựng bố cục chung (Layout), cấu hình `axiosClient` có cơ chế tự động Refresh Token, cài đặt giao diện nhận diện thương hiệu.
+* **Backend:** Thiết kế CSDL (ERD), API Contract chuẩn RESTful, khởi tạo Express, kết nối DB MongoDB, cấu trúc thư mục chuẩn và biến môi trường `.env`.
+* **Frontend:** Khởi tạo React + Vite, thiết lập React Router, xây dựng bố cục chung (Layout), cấu hình `axiosClient` có cơ chế tự động Refresh Token, cài đặt giao diện và nhận diện thương hiệu chuẩn.
 
 ### Đánh giá mức độ hoàn thiện: **ĐÃ HOÀN THÀNH 100% VƯỢT TIẾN ĐỘ**
-Hệ thống không chỉ hoàn thành phần khung xương chuẩn bị mà còn xây dựng và kiểm thử thành công toàn bộ các luồng xác thực thực tế (**US01 & US02**) để sẵn sàng ghép nối cho các Sprint tiếp theo.
+Hệ thống không chỉ hoàn thành phần khung xương chuẩn bị mà còn xây dựng, tối ưu hóa giao diện người dùng thực tế và kiểm thử thành công toàn bộ các luồng xác thực (**US01 & US02**) để sẵn sàng ghép nối cho các Sprint tiếp theo.
 
 ---
 
@@ -18,17 +18,17 @@ Hệ thống không chỉ hoàn thành phần khung xương chuẩn bị mà cò
 
 | Thành phần | Yêu cầu đặc tả Sprint 1 | Hiện trạng thực tế | Trạng thái |
 | :--- | :--- | :--- | :---: |
-| **Backend** | Thiết kế ERD CSDL | Xây dựng đầy đủ 16 Mô hình Mongoose Models theo đúng mục 7 tài liệu. | **Đạt** |
+| **Backend** | Thiết kế ERD CSDL | Xây dựng đầy đủ 16 Mô hình Mongoose Models theo đúng mục 7 tài liệu đặc tả. | **Đạt** |
 | **Backend** | API Contract | Chuẩn hóa theo chuẩn RESTful `/api/v1/...` và định dạng `{ success, message, data }`. | **Đạt** |
 | **Backend** | Khởi tạo Express | Khởi tạo cấu trúc Express hoàn chỉnh, bảo mật với Helmet, CORS, Cookie-parser, Rate-limiter. | **Đạt** |
 | **Backend** | Kết nối DB | Kết nối MongoDB thành công (hỗ trợ cả Local và MongoDB Atlas đám mây). | **Đạt** |
 | **Backend** | Cấu trúc thư mục | Phân tầng rõ ràng: `controllers`, `middlewares`, `models`, `routes`, `utils`, `config`. | **Đạt** |
 | **Backend** | Biến môi trường | Đã tạo `.env` và `.env.example` với chú thích tiếng Việt đầy đủ. | **Đạt** |
-| **Frontend** | Khởi tạo React + Vite | Khởi tạo React 18 + Vite 5 + TailwindCSS 3, build nhanh 3.09s, không có lỗi. | **Đạt** |
+| **Frontend** | Khởi tạo React + Vite | Khởi tạo React 18 + Vite 5 + TailwindCSS 3, build nhanh 3.10s, không có lỗi. | **Đạt** |
 | **Frontend** | React Router | Thiết lập định tuyến toàn diện, tích hợp `ProtectedRoute` và `RoleRoute` phân quyền. | **Đạt** |
 | **Frontend** | Layout hệ thống | Bố cục `MainLayout` gồm Navbar, Footer, trang chủ, tích hợp Logo và Favicon Gia Sư Việt. | **Đạt** |
 | **Frontend** | axiosClient | BaseURL linh hoạt, `withCredentials: true`, Interceptor tự động Refresh Token khi gặp lỗi 401. | **Đạt** |
-| **Frontend** | Trải nghiệm người dùng | Cỡ chữ to rõ ràng (16px), dễ nhìn, form đăng ký 3 ô tinh gọn, có 4 tài khoản mẫu 1-click. | **Đạt** |
+| **Frontend** | Trải nghiệm người dùng | Cỡ chữ to rõ ràng (16px), dễ nhìn, form đăng ký 3 ô tinh gọn, giao diện thực tế sạch sẽ. | **Đạt** |
 
 ---
 
@@ -40,7 +40,6 @@ ket_noi_hv_gv/
 │   ├── .env                    # Biến môi trường bí mật (được gitignore)
 │   ├── .env.example            # Biến môi trường mẫu có chú thích tiếng Việt
 │   ├── package.json            # Cấu hình phụ thuộc và scripts Backend
-│   ├── seed-demo-users.js      # Khởi tạo 4 tài khoản mẫu để kiểm thử nhanh
 │   ├── server.js               # Điểm khởi động máy chủ Backend
 │   ├── test-sprint1.js         # Kịch bản kiểm thử tự động 7/7 chức năng
 │   └── src/
@@ -80,31 +79,31 @@ ket_noi_hv_gv/
 │   ├── vite.config.js          # Cấu hình máy chủ Vite port 5173
 │   ├── public/
 │   │   ├── favicon.ico         # Favicon icon 32x32px
-│   │   └── favicon.png         # Favicon sắc nét 128x128px
+│   │   └── favicon.png         # Favicon sắc nét 128x128px (trong suốt, không viền xám)
 │   └── src/
 │       ├── assets/
-│       │   ├── logo-icon.png   # Logo huy hiệu tròn chính thức Gia Sư Việt
+│       │   ├── logo-icon.png   # Logo huy hiệu tròn chính thức Gia Sư Việt (chuẩn pixel)
 │       │   └── logo-full.png   # Logo đầy đủ kèm chữ
 │       ├── components/
-│       │   └── layout/
-│       │       ├── Footer.jsx  # Chân trang (điều khoản Nghị định 13/2023/NĐ-CP)
-│       │       ├── MainLayout.jsx # Khung bố cục chung
-│       │       └── Navbar.jsx  # Thanh điều hướng hiển thị theo vai trò người dùng
+│       └── layout/
+│           ├── Footer.jsx      # Chân trang (điều khoản Nghị định 13/2023/NĐ-CP)
+│           ├── MainLayout.jsx  # Khung bố cục chung
+│           └── Navbar.jsx      # Thanh điều hướng hiển thị theo vai trò người dùng
 │       ├── contexts/
 │       │   └── AuthContext.jsx # Quản lý phiên làm việc trong RAM (in-memory)
 │       ├── pages/
 │       │   ├── auth/
 │       │   │   ├── ForgotPasswordPage.jsx # Quên mật khẩu qua OTP
-│       │   │   ├── LoginPage.jsx          # Đăng nhập (kèm 4 tài khoản test 1-click)
+│       │   │   ├── LoginPage.jsx          # Đăng nhập sạch sẽ, chuyên nghiệp
 │       │   │   ├── RegisterPage.jsx       # Đăng ký 3 ô tinh gọn (Học viên/Gia sư/Trung tâm)
 │       │   │   └── VerifyOtpPage.jsx      # Nhập mã OTP 6 số (đếm ngược 5 phút)
 │       │   ├── dashboard/
-│       │   │   └── DashboardPage.jsx      # Bảng điều khiển kiểm tra live API
+│       │   │   └── DashboardPage.jsx      # Bảng điều khiển người dùng thực tế
 │       │   ├── errors/
 │       │   │   ├── NotFoundPage.jsx       # Trang 404
 │       │   │   └── UnauthorizedPage.jsx   # Trang 403 không có quyền
 │       │   └── home/
-│       │       └── HomePage.jsx           # Trang chủ giới thiệu nền tảng
+│       │       └── HomePage.jsx           # Trang chủ (khối bảo mật Glassmorphism cao cấp)
 │       ├── routes/
 │       │   ├── AppRoutes.jsx              # Cây định tuyến toàn hệ thống
 │       │   ├── ProtectedRoute.jsx         # Chặn truy cập khi chưa đăng nhập
@@ -116,14 +115,15 @@ ket_noi_hv_gv/
 │       ├── index.css                      # CSS toàn cục, font chữ to rõ (16px)
 │       └── main.jsx                       # Entry point React
 ├── package.json                # Root scripts điều phối toàn dự án
-└── SPRINT_1.md                 # Tài liệu nghiệm thu này
+├── README.md                   # Tài liệu hướng dẫn sử dụng và phát triển dự án
+└── SPRINT_1.md                 # Báo cáo tổng hợp nghiệm thu này
 ```
 
 ---
 
 ## 4. Thiết kế Cơ sở dữ liệu (ERD) hoàn chỉnh
 
-Dưới đây là sơ đồ quan hệ giữa các thực thể trong hệ thống theo đúng mục 7 của tài liệu:
+Dưới đây là sơ đồ quan hệ giữa 16 thực thể trong hệ thống theo đúng mục 7 của tài liệu:
 
 ```mermaid
 erDiagram
@@ -220,9 +220,29 @@ erDiagram
 
 ---
 
-## 7. Hướng dẫn khởi chạy và kiểm thử
+## 7. Các cải tiến giao diện người dùng theo nhận diện thương hiệu GIA SƯ VIỆT
 
-### 7.1. Chạy hệ thống trên môi trường máy tính
+1. **Logo & Favicon chính thức:**
+   * Logo huy hiệu tròn và Favicon được trích xuất chính xác theo tọa độ pixel `(cx=829, cy=281, r=104px)` với mặt nạ khử răng cưa mượt mà, loại bỏ 100% các ô bàn cờ xám bên ngoài.
+   * Đổi tên thương hiệu chuẩn mực: **GIA SƯ VIỆT – KẾT NỐI GIA SƯ, NÂNG TẦM TRI THỨC**.
+2. **Khối Bảo mật & Kiểm duyệt sang trọng:**
+   * Nâng cấp khối chính sách bảo mật trên trang chủ với nền gradient cao cấp `Slate-950/Blue-950`, hiệu ứng ánh sáng phát quang mờ và 3 thẻ tính năng Glassmorphism (Kính mờ) trực quan.
+3. **Tinh gọn Form Đăng ký:**
+   * Form chỉ gồm 3 ô nhập nhanh gọn: **Email**, **Số điện thoại**, **Mật khẩu** (có icon 👁️ bật/tắt hiển thị mật khẩu).
+   * 3 thẻ chọn vai trò trực quan, có mô tả mục đích:
+     * 🎓 **Học viên:** Tìm người dạy kèm
+     * 👨‍🏫 **Gia sư:** Nhận lớp dạy kèm
+     * 🏫 **Trung tâm:** Tuyển giáo viên / gia sư
+4. **Kích thước chữ to rõ, dễ nhìn:**
+   * Tăng kích thước phông chữ cơ sở lên `16px`, khoảng cách dòng thoáng đãng, các nút bấm to bản giúp đọc và thao tác thuận tiện trên cả máy tính lẫn điện thoại.
+5. **Giao diện thực tế, sạch sẽ:**
+   * Đã dọn dẹp sạch sẽ toàn bộ các khối kiểm thử nội bộ, tài khoản mẫu hay từ khóa sprint khỏi giao diện người dùng. Trang Dashboard hoạt động như một bảng điều khiển cá nhân thực thụ.
+
+---
+
+## 8. Hướng dẫn khởi chạy và kiểm thử
+
+### 8.1. Khởi động hệ thống
 Từ thư mục gốc dự án:
 ```bash
 # 1. Khởi động Backend (chạy tại http://localhost:5000)
@@ -232,7 +252,7 @@ npm run dev:backend
 npm run dev:frontend
 ```
 
-### 7.2. Chạy kịch bản kiểm thử tự động
+### 8.2. Chạy kịch bản kiểm thử tự động
 ```bash
 npm run test:backend
 ```
@@ -248,14 +268,7 @@ npm run test:backend
 ✓ [7/7] POST /auth/logout: Đăng xuất thành công, cookie đã được thu hồi
 ```
 
-### 7.3. Tài khoản mẫu kiểm thử 1-click có sẵn trên giao diện Đăng nhập
-* 🎓 **Học viên:** `hocvien@test.com` *(Mật khẩu:* `Password123!`*)*
-* 👨‍🏫 **Gia sư:** `giasu@test.com` *(Mật khẩu:* `Password123!`*)*
-* 🏫 **Trung tâm:** `trungtam@test.com` *(Mật khẩu:* `Password123!`*)*
-* 🛡️ **Quản trị viên:** `admin@test.com` *(Mật khẩu:* `Password123!`*)*
-
 ---
 
-## 8. Kết luận nghiệm thu
+## 9. Kết luận nghiệm thu
 Giai đoạn **Sprint 1 (Chuẩn bị & Kiến trúc nền tảng)** đã được hoàn thiện đạt chuẩn chất lượng cao nhất, đồng bộ mã nguồn lên nhánh **`trong`** của Git repository và sẵn sàng bước sang **Sprint 3 (Hồ sơ & Kiểm duyệt - US03, US04)**.
-
