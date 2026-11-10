@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 540" width="100%" height="100%" style="background:#0f172a; font-family:'Segoe UI',Roboto,Helvetica,sans-serif;">
+  <defs>
+    <linearGradient id="headerGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f87171" />
+    </marker>
+  </defs>
+
+  <rect x="30" y="20" width="990" height="60" rx="12" fill="url(#headerGrad3)" />
+  <text x="525" y="58" font-size="22" font-weight="bold" fill="#ffffff" text-anchor="middle">SƠ ĐỒ KIỂM TRA DỮ LIỆU (VALIDATION) 2 TẦNG: REACT FORM &amp; JOI</text>
+
+  <rect x="40" y="105" width="130" height="45" rx="8" fill="#3b82f6" />
+  <text x="105" y="133" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Form UI (Inputs)</text>
+  <line x1="105" y1="150" x2="105" y2="500" stroke="#475569" stroke-width="2" stroke-dasharray="4" />
+
+  <rect x="220" y="105" width="160" height="45" rx="8" fill="#0284c7" />
+  <text x="300" y="125" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">State fieldErrors</text>
+  <text x="300" y="142" font-size="11" fill="#bae6fd" text-anchor="middle">RegisterPage.jsx (L37)</text>
+  <line x1="300" y1="150" x2="300" y2="500" stroke="#475569" stroke-width="2" stroke-dasharray="4" />
+
+  <rect x="430" y="105" width="160" height="45" rx="8" fill="#8b5cf6" />
+  <text x="510" y="125" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Router Express</text>
+  <text x="510" y="142" font-size="11" fill="#ede9fe" text-anchor="middle">auth.routes.js (L14)</text>
+  <line x1="510" y1="150" x2="510" y2="500" stroke="#475569" stroke-width="2" stroke-dasharray="4" />
+
+  <rect x="640" y="105" width="180" height="45" rx="8" fill="#d97706" />
+  <text x="730" y="125" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Joi Schema Rules</text>
+  <text x="730" y="142" font-size="11" fill="#fef3c7" text-anchor="middle">email, phone, password (L29)</text>
+  <line x1="730" y1="150" x2="730" y2="500" stroke="#475569" stroke-width="2" stroke-dasharray="4" />
+
+  <rect x="870" y="105" width="140" height="45" rx="8" fill="#dc2626" />
+  <text x="940" y="125" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Gom Mảng Lỗi</text>
+  <text x="940" y="142" font-size="11" fill="#fee2e2" text-anchor="middle">abortEarly: false (L54)</text>
+  <line x1="940" y1="150" x2="940" y2="500" stroke="#475569" stroke-width="2" stroke-dasharray="4" />
+
+  <line x1="105" y1="185" x2="300" y2="185" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="200" y="178" font-size="11" fill="#f1f5f9" text-anchor="middle">1. Gõ phím -&gt; lưu state</text>
+
+  <line x1="105" y1="230" x2="510" y2="230" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="305" y="223" font-size="11" fill="#f1f5f9" text-anchor="middle">2. Bấm submit gửi JSON Body lên Server</text>
+
+  <line x1="510" y1="270" x2="730" y2="270" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="620" y="263" font-size="11" fill="#f1f5f9" text-anchor="middle">3. Đẩy vào validate.register</text>
+
+  <line x1="730" y1="315" x2="940" y2="315" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="835" y="308" font-size="11" fill="#f1f5f9" text-anchor="middle">4. schema.validate(req.body) (L54)</text>
+
+  <rect x="880" y="340" width="120" height="40" rx="6" fill="#7f1d1d" stroke="#f87171" stroke-width="1" />
+  <text x="940" y="358" font-size="10" fill="#fee2e2" text-anchor="middle">Gom details:</text>
+  <text x="940" y="372" font-size="10" fill="#fecaca" text-anchor="middle">[{field, message}]</text>
+
+  <line x1="940" y1="415" x2="300" y2="415" stroke="#f87171" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrowRed)" />
+  <text x="620" y="408" font-size="11" font-weight="bold" fill="#f87171" text-anchor="middle">5. Trả HTTP 400 VALIDATION_ERROR kèm mảng details (L60)</text>
+
+  <line x1="300" y1="465" x2="105" y2="465" stroke="#f87171" stroke-width="2" marker-end="url(#arrowRed)" />
+  <text x="200" y="458" font-size="11" fill="#f87171" text-anchor="middle">6. Hiển thị chữ đỏ từng ô (L179, L200)</text>
+</svg>

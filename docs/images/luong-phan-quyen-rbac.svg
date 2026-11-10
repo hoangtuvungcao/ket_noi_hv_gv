@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 560" width="100%" height="100%" style="background:#0f172a; font-family:'Segoe UI',Roboto,Helvetica,sans-serif;">
+  <defs>
+    <linearGradient id="headerGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f87171" />
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#4ade80" />
+    </marker>
+  </defs>
+
+  <!-- Title bar -->
+  <rect x="30" y="20" width="990" height="60" rx="12" fill="url(#headerGrad2)" />
+  <text x="525" y="58" font-size="22" font-weight="bold" fill="#ffffff" text-anchor="middle">SƠ ĐỒ PHÂN QUYỀN RBAC: BẢO VỆ 2 TẦNG (FRONTEND &amp; BACKEND)</text>
+
+  <!-- Lifeline Headers -->
+  <rect x="40" y="105" width="120" height="45" rx="8" fill="#3b82f6" />
+  <text x="100" y="133" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">User / Browser</text>
+  <line x1="100" y1="150" x2="100" y2="520" stroke="#475569" stroke-width="2" stroke-dasharray="4" />
+
+  <rect x="200" y="105" width="150" height="45" rx="8" fill="#6366f1" />
+  <text x="275" y="125" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">RoleRoute.jsx</text>
+  <text x="275" y="142" font-size="11" fill="#e0e7ff" text-anchor="middle">Route Guard FE</text>
+  <line x1="275" y1="150" x2="275" y2="520" stroke="#475569" stroke-width="2" stroke-dasharray="4" />
+
+  <rect x="390" y="105" width="140" height="45" rx="8" fill="#0d9488" />
+  <text x="460" y="125" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">AuthContext (RAM)</text>
+  <text x="460" y="142" font-size="11" fill="#ccfbf1" text-anchor="middle">user.role &amp; Token</text>
+  <line x1="460" y1="150" x2="460" y2="520" stroke="#475569" stroke-width="2" stroke-dasharray="4" />
+
+  <rect x="570" y="105" width="140" height="45" rx="8" fill="#0284c7" />
+  <text x="640" y="125" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">axiosClient</text>
+  <text x="640" y="142" font-size="11" fill="#bae6fd" text-anchor="middle">Request Interceptor</text>
+  <line x1="640" y1="150" x2="640" y2="520" stroke="#475569" stroke-width="2" stroke-dasharray="4" />
+
+  <rect x="750" y="105" width="140" height="45" rx="8" fill="#d97706" />
+  <text x="820" y="125" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">verifyToken</text>
+  <text x="820" y="142" font-size="11" fill="#fef3c7" text-anchor="middle">auth.middleware.js</text>
+  <line x1="820" y1="150" x2="820" y2="520" stroke="#475569" stroke-width="2" stroke-dasharray="4" />
+
+  <rect x="920" y="105" width="100" height="45" rx="8" fill="#dc2626" />
+  <text x="970" y="125" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">checkRole</text>
+  <text x="970" y="142" font-size="11" fill="#fee2e2" text-anchor="middle">RBAC BE</text>
+  <line x1="970" y1="150" x2="970" y2="520" stroke="#475569" stroke-width="2" stroke-dasharray="4" />
+
+  <!-- Flow 1: Guard FE -->
+  <line x1="100" y1="185" x2="275" y2="185" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="185" y="178" font-size="11" fill="#f1f5f9" text-anchor="middle">1. Vào URL /dashboard</text>
+
+  <line x1="275" y1="215" x2="460" y2="215" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="365" y="208" font-size="11" fill="#f1f5f9" text-anchor="middle">2. Đọc user.role (L12)</text>
+
+  <rect x="215" y="235" width="120" height="40" rx="6" fill="#1e1b4b" stroke="#818cf8" stroke-width="1" />
+  <text x="275" y="253" font-size="10" fill="#c7d2fe" text-anchor="middle">!allowedRoles.includes</text>
+  <text x="275" y="267" font-size="10" font-weight="bold" fill="#f87171" text-anchor="middle">-&gt; đá về /unauthorized (L27)</text>
+
+  <!-- Flow 2: Gọi API qua Interceptor -->
+  <line x1="275" y1="305" x2="640" y2="305" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="455" y="298" font-size="11" fill="#f1f5f9" text-anchor="middle">3. Hợp lệ vai trò -&gt; Cho phép render &amp; gọi API</text>
+
+  <line x1="640" y1="345" x2="460" y2="345" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3" marker-end="url(#arrow)" />
+  <text x="550" y="338" font-size="11" fill="#cbd5e1" text-anchor="middle">Lấy accessToken từ RAM</text>
+
+  <line x1="640" y1="385" x2="820" y2="385" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="730" y="378" font-size="11" fill="#f1f5f9" text-anchor="middle">4. Header: Bearer &lt;Token&gt; (L60)</text>
+
+  <!-- Flow 3: Giải mã token BE -->
+  <line x1="820" y1="425" x2="970" y2="425" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="895" y="418" font-size="11" fill="#f1f5f9" text-anchor="middle">5. jwt.verify -&gt; req.user</text>
+
+  <!-- Flow 4: checkRole BE -->
+  <rect x="915" y="445" width="110" height="30" rx="6" fill="#7f1d1d" stroke="#f87171" stroke-width="1" />
+  <text x="970" y="465" font-size="11" fill="#fee2e2" text-anchor="middle">checkRole (L56)</text>
+
+  <!-- Case 1: Lỗi 403 -->
+  <line x1="970" y1="495" x2="100" y2="495" stroke="#f87171" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrowRed)" />
+  <text x="535" y="488" font-size="11" font-weight="bold" fill="#f87171" text-anchor="middle">Nếu sai vai trò: Trả HTTP 403 FORBIDDEN (L62)</text>
+</svg>
