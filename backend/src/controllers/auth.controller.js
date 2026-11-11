@@ -34,7 +34,7 @@ const generateAccessToken = (user) => {
   return jwt.sign(
     {
       id: user._id || user.id,
-      role: user.role,
+      role: user.role, 
     },
     secret,
     { expiresIn: ACCESS_TOKEN_EXPIRY }

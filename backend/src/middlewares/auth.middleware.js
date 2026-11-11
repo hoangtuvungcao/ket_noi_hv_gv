@@ -1,6 +1,5 @@
 /**
  * middleware xác thực jwt và phân quyền người dùng (rbac)
- * tuân thủ mục 1.5, 3.1 và bảo mật tầng 3 trong tài liệu đặc tả:
  * - access token (jwt, sống 15 phút) gửi qua header Authorization: Bearer <token>
  * - kiểm tra vai trò (student / tutor / center / admin)
  * - kiểm tra quyền sở hữu tài nguyên (ownership)
@@ -14,7 +13,7 @@ const authMiddleware = {
    * xác thực token truy cập (access token)
    */
   verifyToken: (req, res, next) => {
-    try {
+    try { 
       const authHeader = req.headers.authorization;
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return ApiResponse.error(

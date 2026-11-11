@@ -1,6 +1,5 @@
 /**
  * middleware xử lý lỗi tập trung và xử lý route không tồn tại (404)
- * tuân thủ bảo mật tầng 3 trong tài liệu đặc tả:
  * - không lộ vết lỗi hệ thống (stack trace) ra ngoài môi trường production
  * - chuẩn hóa định dạng trả về đồng nhất
  */
