@@ -125,6 +125,11 @@ ket_noi_hv_gv/
 
 Dưới đây là sơ đồ quan hệ giữa 16 thực thể trong hệ thống theo đúng mục 7 của tài liệu:
 
+![Sơ đồ ERD Cơ sở dữ liệu Gia Sư Việt](docs/images/so-do-erd-csdl.png)
+
+<details>
+<summary>👉 Bấm vào đây để xem mã nguồn Mermaid của sơ đồ ERD này</summary>
+
 ```mermaid
 erDiagram
     USERS ||--o| STUDENT_PROFILES : "1 - 1"
@@ -154,6 +159,7 @@ erDiagram
     CONVERSATIONS ||--o{ MESSAGES : "chứa tin nhắn"
     USERS ||--o{ NOTIFICATIONS : "nhận thông báo"
 ```
+</details>
 
 ---
 
