@@ -2,7 +2,9 @@
 
 > **Tài liệu phục vụ buổi báo cáo & trả lời vấn đáp trực tiếp trên mã nguồn.**  
 > Mọi file, dòng code, sơ đồ luồng dữ liệu (Data Flow) và câu hỏi phản biện đã được đối chiếu chuẩn xác 100% với mã nguồn thực tế của dự án.  
-> Sơ đồ được nhúng trực tiếp dạng ảnh Vector SVG (GitHub và mọi trình xem Markdown tự động hiển thị sắc nét 100%).
+> Sơ đồ được nhúng trực tiếp dạng ảnh Vector SVG & PNG chất lượng cao (GitHub và mọi trình xem Markdown tự động hiển thị sắc nét 100%).  
+> 
+> 🔗 **Xem ngay bảng ma trận chức năng chuẩn mẫu của lớp học dạng ảnh:** [BANG_CHI_TIET_SO_DO_CHUC_NANG.md](BANG_CHI_TIET_SO_DO_CHUC_NANG.md)
 
 ---
 
